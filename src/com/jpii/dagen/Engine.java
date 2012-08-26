@@ -111,6 +111,10 @@ public class Engine {
 		return smoothamount;
 	}
 	
+	public int r(int min, int max) {
+		return rand.nextInt(max-min) + min;
+	}
+	
 	public void setSmoothFactor(int amount) {
 		smoothamount = amount;
 	}

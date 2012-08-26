@@ -29,16 +29,17 @@ public class IslandEngine extends Engine {
 	}
 	
 	private boolean iterate(int x, int y) {
-		double nx = Math.cos(x * rr) + x;
-		double ny = Math.sin(x * rr) + y;
+		double nx = Math.cos(x * rr) + x + r(-2,2);
+		double ny = Math.sin(y * rr) + y + r(-2,2);
 		
 		double tr = Math.sqrt(Math.pow(nx - (width/2),2) + Math.pow(ny - (height/2),2));
 		
-		if (tr + 0.000001 > rr)
+		if (tr + 0.000001 + (width/5) > rr)
 			return false;
 		else
 			return true;
 	}
+	
 	
 	public double[][] getWaterPoints() {
 		if (waterpoints == null) {
