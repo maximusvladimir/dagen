@@ -50,6 +50,32 @@ public class IslandEngine extends Engine {
 				}
 			}
 		}
+		/*for (int mountains = 0; mountains < r(3,5); mountains++) {
+			boolean mpointfound = false;
+			int x = 0;
+			int y = 0;
+			while (!mpointfound) {
+				x = r(0,width);
+				y = r(0,height);
+				
+				// Makes sure we aren't in the water.
+				if (waterpoints[x][y] != 0)
+					mpointfound = true;
+			}
+			
+			for (int pass = 0; pass < r(60,100); pass++) {
+				int rx = x + r(-5,5);
+				int ry = y + r(-5,5);
+				for (int c = 0; c < r(5,10); c++){
+					int gx = r(5,10);
+					int gy = r(5,10);
+					gx = ((int)Math.cos(gx * r(2,5)) + gx + r(-3,3)) + rx;
+					gy = ((int)Math.sin(gy * r(2,5)) + gy + r(-3,3)) + ry;
+					if (gx < width && gy < height)
+						points[gx][gy] += (1 - points[gx][gy]) / 2;
+				}
+			}
+		}*/
 		
 	}
 	
