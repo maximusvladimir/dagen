@@ -14,25 +14,19 @@ public class IslandEngine extends Engine {
 		
 		waterpoints = new double[width][height];
 		
-		rr = rand.nextInt(width/3) + width/2;
+		rr = rand.nextInt(width/3) + width/3;
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				if (iterate(x,y)){
-					points[x][y] += 0.2;
-					//waterpoints[x][y] = points[x][y];
+					waterpoints[x][y] = points[x][y];
 				}
-				else {
-					points[x][y] =  0;
-				}
-					//waterpoints[x][y] = 0;
+				else
+					waterpoints[x][y] = 0;
 			}
 		}
-		int numLakes = 2;
 		
-		numLakes = (int)((width / rr) * 6);
-		
-		for (int lakes = 0; lakes < numLakes; lakes++) {
+		for (int lakes = 0; lakes < r(3,5); lakes++) {
 			boolean lakepointfound = false;
 			int x = 0;
 			int y = 0;
@@ -40,7 +34,7 @@ public class IslandEngine extends Engine {
 				x = r(0,width);
 				y = r(0,height);
 				
-				if (points[x][y] > 0.4)
+				if (waterpoints[x][y] != 0)
 					lakepointfound = true;
 			}
 			
@@ -52,17 +46,7 @@ public class IslandEngine extends Engine {
 					int gy = r(5,10);
 					gx = ((int)Math.cos(gx * r(2,5)) + gx + r(-3,3)) + rx;
 					gy = ((int)Math.sin(gy * r(2,5)) + gy + r(-3,3)) + ry;
-					if (gx < width && gy < height)
-						points[gx][gy] = 0;
-				}
-			}
-		}
-		
-		for (int x = 2; x < width-4; x++) {
-			for (int y = 2; y < height-4; y++) {
-				if (points[x-1][y] == 0 && points[x][y-1] == 0 &&
-						points[x+1][y] == 0 && points[x][y+1] == 0) {
-					points[x][y] = 0;
+					waterpoints[gx][gy] = 0;
 				}
 			}
 		}

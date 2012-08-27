@@ -23,14 +23,6 @@ public class Test extends Applet{
 		repaint();
 	}
 	
-	public int snap(double d) {
-		if (d > 1.0)
-			d = 1.0;
-		if (d < 0.0)
-			d = 0.0;
-		return (int)(d * 255);
-	}
-	
 	public void paint(Graphics g) {
 		if (eng != null) {	
 			double[][] points = eng.getPoints();
@@ -39,33 +31,20 @@ public class Test extends Applet{
 			g.fillRect(0, 0, getWidth(), getHeight());
 			for (int x = 0; x < WIDTH; x++) {
 				for (int y = 0; y < HEIGHT; y++) {
-					if (points[x][y] < 0.3){
-						g.setColor(new Color(50 - eng.r(-10,10), 100 - eng.r(-10, 0),150-  eng.r(-10, 10)));
+					boolean isWater = false;
+					if (water[x][y] == 0)
+						isWater = true;
+					
+					if (isWater){
+						g.setColor(new Color(50 - eng.r(-5,5), 100 - eng.r(-5, 5),150-  eng.r(-5, 5)));
 						g.fillRect(x * 3, y * 3, 3,3);
 					}
 					else {
-						boolean flag0 = false;
-						if (x > 3 & y > 3 && x < eng.getWidth() - 3 && y < eng.getHeight() - 3) {
-							if (points[x-1][y] < 0.3 || points[x-1][y-1] < 0.3
-									|| points[x][y-1] < 0.3 || points[x+1][y+1] < 0.3
-									|| points[x+1][y] < 0.3 || points[x][y+1] < 0.3) {
-								int reduce = (int)(points[x][y] * 119);
-								int cr = 164 - reduce + eng.r(10, 30);//eng.r(-5,5) - reduce;
-								int cg = 149 - reduce + eng.r(10, 30);//eng.r(-5, 5) - reduce;
-								int cb = 125 - reduce + eng.r(10, 30); //eng.r(-5, 5) - reduce;
-								int rgb = snap(points[x][y]);
-								g.setColor(new Color(cr, cg,cb));
-								flag0 = true;
-							}	
-						}
-						if (!flag0) {
-							int reduce = (int)(points[x][y] * 6);
-							int cr = 64 - reduce;//eng.r(-5,5) - reduce;
-							int cg = 128 - reduce + eng.r(-5, 5);//eng.r(-5, 5) - reduce;
-							int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
-							int rgb = snap(points[x][y]);
-							g.setColor(new Color(cr, cg,cb));//new Color(rgb,rgb,rgb));
-						}
+						int reduce = (int)(points[x][y] * 60);
+						int cr = 64 - reduce;//eng.r(-5,5) - reduce;
+						int cg = 128 - reduce + eng.r(-5, 5);//eng.r(-5, 5) - reduce;
+						int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
+						g.setColor(new Color(cr, cg,cb));
 						g.fillRect(x * 3, y * 3, 3,3);
 					}
 				}
