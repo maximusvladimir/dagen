@@ -38,8 +38,20 @@ public class IslandEngine extends Engine {
 					lakepointfound = true;
 			}
 			
-			for (int pass = 0; pass < r(3,10); pass++) {
-				
+			for (int pass = 0; pass < 60; pass++) {
+				int rx = x + r(-5,5);
+				int ry = y + r(-5,5);
+				for (int c = 0; c < r(5,10); c++){
+					int gx = r(5,10);
+					int gy = r(5,10);
+					
+					gx = (int)Math.cos(gx * r(2,5)) + gx + r(-3,3);
+					gy = (int)Math.sin(gy * r(2,5)) + gy + r(-3,3);
+					
+					gx += rx;
+					gy += ry;
+					waterpoints[gx][gy] = 0;
+				}
 			}
 		}
 		

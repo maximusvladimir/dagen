@@ -33,6 +33,8 @@ public class Test extends Applet{
 					int rgb = (int)(points[x][y] * 255);
 					if (water[x][y] != 0)
 						g.setColor(new Color(rgb,rgb,rgb));
+					else if (water[x][y] == 1.1)
+						g.setColor(new Color(255,0,0));
 					else
 						g.setColor(new Color(0,0,rgb));
 					g.fillRect(x * 3, y * 3, 3,3);
