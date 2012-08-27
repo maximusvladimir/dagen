@@ -26,7 +26,7 @@ public class IslandEngine extends Engine {
 			}
 		}
 		
-		for (int lakes = 0; lakes < r(1,3); lakes++) {
+		for (int lakes = 0; lakes < r(3,5); lakes++) {
 			boolean lakepointfound = false;
 			int x = 0;
 			int y = 0;
@@ -38,18 +38,14 @@ public class IslandEngine extends Engine {
 					lakepointfound = true;
 			}
 			
-			for (int pass = 0; pass < 60; pass++) {
+			for (int pass = 0; pass < r(60,100); pass++) {
 				int rx = x + r(-5,5);
 				int ry = y + r(-5,5);
 				for (int c = 0; c < r(5,10); c++){
 					int gx = r(5,10);
 					int gy = r(5,10);
-					
-					gx = (int)Math.cos(gx * r(2,5)) + gx + r(-3,3);
-					gy = (int)Math.sin(gy * r(2,5)) + gy + r(-3,3);
-					
-					gx += rx;
-					gy += ry;
+					gx = ((int)Math.cos(gx * r(2,5)) + gx + r(-3,3)) + rx;
+					gy = ((int)Math.sin(gy * r(2,5)) + gy + r(-3,3)) + ry;
 					waterpoints[gx][gy] = 0;
 				}
 			}
