@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
 
+@SuppressWarnings("serial")
 public class Test extends Applet{
 	
 	IslandEngine eng;
