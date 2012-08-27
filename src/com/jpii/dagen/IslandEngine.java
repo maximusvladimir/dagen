@@ -26,6 +26,23 @@ public class IslandEngine extends Engine {
 			}
 		}
 		
+		for (int lakes = 0; lakes < r(1,3); lakes++) {
+			boolean lakepointfound = false;
+			int x = 0;
+			int y = 0;
+			while (!lakepointfound) {
+				x = r(0,width);
+				y = r(0,height);
+				
+				if (waterpoints[x][y] != 0)
+					lakepointfound = true;
+			}
+			
+			for (int pass = 0; pass < r(3,10); pass++) {
+				
+			}
+		}
+		
 	}
 	
 	private boolean iterate(int x, int y) {
