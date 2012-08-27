@@ -4,7 +4,6 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import com.jpii.dagen.Engine;
 import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
 
@@ -23,16 +22,13 @@ public class Test extends Applet{
 	}
 	
 	public void paint(Graphics g) {
-		if (eng != null)
-		{	
+		if (eng != null) {	
 			double[][] points = eng.getPoints();
 			double[][] water = eng.getWaterPoints();
 			g.setColor(Color.black);
 			g.fillRect(0, 0, getWidth(), getHeight());
-			for (int x = 0; x < WIDTH; x++)
-			{
-				for (int y = 0; y < HEIGHT; y++)
-				{
+			for (int x = 0; x < WIDTH; x++) {
+				for (int y = 0; y < HEIGHT; y++) {
 					int rgb = (int)(points[x][y] * 255);
 					if (water[x][y] != 0)
 						g.setColor(new Color(rgb,rgb,rgb));
