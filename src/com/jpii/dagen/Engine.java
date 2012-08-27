@@ -11,22 +11,40 @@ public class Engine {
 	int smoothamount = 10;
 	
 	double[][] points;
-	
 	Random rand;
 	
+	/**
+	 * Creates an instance of the Engine class.
+	 * @param width The width of the generation matrix
+	 * @param height The height of the generation matrix
+	 */
 	public Engine(int width, int height) {
 		this.width = width;
 		this.height = height;
 	}
 	
+	/**
+	 * Gets the height of the generation matrix.
+	 * @return The height of the matrix.
+	 */
 	public int getHeight() {
 		return height;
 	}
 	
+	/**
+	 * Gets the width of the generation matrix.
+	 * @return The width of the generation matrix.
+	 */
 	public int getWidth() {
 		return width;
 	}
 	
+	/**
+	 * Generated the map, and places it in the generation matrix.
+	 * @param type The type of map to produce. (No longer used).
+	 * @param seed The seed (random value) of the map.
+	 * @param magnitude The magnitude (roughness) of the map.
+	 */
 	public void generate(MapType type, int seed, double magnitude) {
 		points = new double[width][height];
 		
@@ -43,7 +61,18 @@ public class Engine {
 		iterate(0,0,width,height,rand.nextDouble(),rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 		iterate(smoothamount >> 2);
 	}
-	
+
+	/**
+	 * Cycles the main generation routine. Do not play with.
+	 * @param x The rectangular x mulitple
+	 * @param y The rectangular y mulitple
+	 * @param width The rectangular width of the iteration stack.
+	 * @param height The rectangular height of the iteration stack.
+	 * @param c1 The positive x random square coordinate.
+	 * @param c2 The positive y random square coordinate.
+	 * @param c3 The middle x random square coordinate.
+	 * @param c4 The middle y random square coordinate.
+	 */
 	private void iterate(double x, double y, double width, double height, double c1, double c2, double c3, double c4) {
         double e1,e2,e3,e4,e5,e6,e7;
         e6 = Math.floor(width / 2);
@@ -73,6 +102,11 @@ public class Engine {
         }
     }
 
+	/**
+	 * "Snaps" a value inbetween 0.0 and 1.0.
+	 * @param num The number to snap.
+	 * @return The snapped number.
+	 */
     private double snap(double num) {
         if (num < 0)
             return 0;
@@ -82,6 +116,10 @@ public class Engine {
         	return num;
     }
 	
+    /**
+     * Cycles the main generation routine. Do not play with.
+     * @param cycli The number of recursions to complete.
+     */
     private void iterate(int cycli) {
     	if (cycli > 0)
     		iterate(cycli - 1);
@@ -100,6 +138,10 @@ public class Engine {
     	}
     }
     
+    /**
+     * Gets the generated points.
+     * @return The generated value matrix.
+     */
 	public double[][] getPoints() {
 		if (points == null)
 			throw new NullPointerException("Map has not been generated yet.");
@@ -107,14 +149,28 @@ public class Engine {
 		return points;
 	}
 	
+	/**
+	 * Get the smoothing factor.
+	 * @return The amount of smoothing to apply.
+	 */
 	public int getSmoothFactor() {
 		return smoothamount;
 	}
 	
+	/**
+	 * Gets a random value between the two numbers, using the current seed.
+	 * @param min The minimum, inclusive number.
+	 * @param max The maximum, exclusive number.
+	 * @return A number between the given values.
+	 */
 	public int r(int min, int max) {
 		return rand.nextInt(max-min) + min;
 	}
-	
+
+	/**
+	 * Sets the smoothing factor.
+	 * @param amount The amount to smooth by.
+	 */
 	public void setSmoothFactor(int amount) {
 		smoothamount = amount;
 	}

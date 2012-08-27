@@ -50,9 +50,9 @@ public class Test extends Applet{
 									|| points[x][y-1] < 0.3 || points[x+1][y+1] < 0.3
 									|| points[x+1][y] < 0.3 || points[x][y+1] < 0.3) {
 								int reduce = (int)(points[x][y] * 119);
-								int cr = 164 - reduce + eng.r(10, 30);//eng.r(-5,5) - reduce;
-								int cg = 149 - reduce + eng.r(10, 30);//eng.r(-5, 5) - reduce;
-								int cb = 125 - reduce + eng.r(10, 30); //eng.r(-5, 5) - reduce;
+								int cr = 164 - reduce + eng.r(10, 30);
+								int cg = 149 - reduce + eng.r(10, 30);
+								int cb = 125 - reduce + eng.r(10, 30);
 								int rgb = snap(points[x][y]);
 								g.setColor(new Color(cr, cg,cb));
 								flag0 = true;
