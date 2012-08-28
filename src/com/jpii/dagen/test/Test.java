@@ -12,6 +12,7 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
+import com.jpii.dagen.EngineStatistics;
 import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
 
@@ -113,11 +114,21 @@ public class Test extends Applet implements KeyListener{
 		
 		g.drawImage(shadowOuter, 0, 0, null);
 		
+		EngineStatistics stats = new EngineStatistics(eng);
+		int amountWater = stats.getPercentWater();
+		
+		if (amountWater < 75) {
+			eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
+			repaint();
+		}
+		//int amountLand = 100 - amountWater;
+		
 		g.setFont(new Font("Segoe UI Light", Font.PLAIN, (int)(getWidth() / (PIXEL * 4.0)) ));
 		g.setColor(new Color(255,255,255,100));
 		g.drawString("Seed:" + eng.getSeed(), 0, 40);
 		g.drawString("Gens:" + eng.getCycles(), 0, 80);
 		g.drawString("Press <space> to regen", 0, 120);
+		g.drawString("Percent water:" + amountWater, 0, 160);
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class IslandEngine extends Engine {
 				x = r(0,width);
 				y = r(0,height);
 				
-				if (points[x][y] > 0.4)
+				if (points[x][y] > waterLevel)
 					lakepointfound = true;
 			}
 			
@@ -63,9 +63,9 @@ public class IslandEngine extends Engine {
 		
 		for (int x = 2; x < width-4; x++) {
 			for (int y = 2; y < height-4; y++) {
-				if (points[x-1][y] < 0.7 && points[x][y-1] < 0.7 &&
-						points[x+1][y] < 0.7 && points[x][y+1] < 0.7) {
-					//points[x][y] = rand.nextDouble() * 0.6;
+				if (points[x-1][y] < waterLevel && points[x][y-1] < waterLevel &&
+						points[x+1][y] < waterLevel && points[x][y+1] < waterLevel) {
+					//points[x][y] = rand.nextDouble() * waterLevel;
 				}
 			}
 		}		

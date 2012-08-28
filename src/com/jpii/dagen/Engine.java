@@ -12,6 +12,8 @@ public class Engine {
 	double magnitude = 1.0;
 	int smoothamount = 10;
 	
+	double waterLevel = 0.7;
+	
 	double[][] points;
 	Random rand;
 	
@@ -191,5 +193,13 @@ public class Engine {
 	 */
 	public void setSmoothFactor(int amount) {
 		smoothamount = amount;
+	}
+	
+	public void setWaterLevel(double amount) {
+		waterLevel = amount;
+	}
+	
+	public double getWaterLevel() {
+		return waterLevel;
 	}
 }
