@@ -3,6 +3,11 @@ package com.jpii.dagen.test;
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RadialGradientPaint;
+import java.awt.MultipleGradientPaint.CycleMethod;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
@@ -12,14 +17,30 @@ public class Test extends Applet{
 	
 	IslandEngine eng;
 	
-	int WIDTH = 100;
-	int HEIGHT = 100;
+	int WIDTH = 200;
+	int HEIGHT = 200;
+	
+	BufferedImage shadowOuter;
 	
 	public void init() {
 		eng = new IslandEngine(WIDTH,HEIGHT);
-		setSize(WIDTH * 2, HEIGHT * 2);
+		setSize(WIDTH * 3, HEIGHT * 3);
 		//eng.setSmoothFactor(3);
+		eng.setIslandRadius(getWidth() / 10);
 		eng.generate(MapType.Hills, (int)(Math.random() * 4000), 1);
+		
+		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		Graphics g = shadowOuter.getGraphics();
+		Graphics2D g2 = (Graphics2D)g;
+		Point2D center = new Point2D.Float(getWidth()/2, getHeight()/2);
+        float radius = getWidth();
+        Point2D focus = new Point2D.Float(getWidth()/2, getHeight()/2);
+        float[] dist = {0.0f,0.3f, 1.0f};
+        Color[] colors = {new Color(0,0,0,0),new Color(0,0,0,0), new Color(0,0,0,255)};
+        RadialGradientPaint p = new RadialGradientPaint(center, radius, focus, dist, colors, CycleMethod.NO_CYCLE);
+        g2.setPaint(p);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+		
 		repaint();
 	}
 	
@@ -34,8 +55,11 @@ public class Test extends Applet{
 	public void paint(Graphics g) {
 		if (eng != null) {	
 			double[][] points = eng.getPoints();
+<<<<<<< HEAD
 			@SuppressWarnings("unused")
 			double[][] water = eng.getWaterPoints();
+=======
+>>>>>>> Demo is ALOT nicer.
 			g.setColor(Color.black);
 			g.fillRect(0, 0, getWidth(), getHeight());
 			for (int x = 0; x < WIDTH; x++) {
@@ -53,8 +77,12 @@ public class Test extends Applet{
 								int reduce = (int)(points[x][y] * 119);
 								int cr = 164 - reduce + eng.r(10, 30);
 								int cg = 149 - reduce + eng.r(10, 30);
+<<<<<<< HEAD
 								int cb = 125 - reduce + eng.r(10, 30);
 								@SuppressWarnings("unused")
+=======
+								int cb = 125 - reduce + eng.r(10, 20);
+>>>>>>> Demo is ALOT nicer.
 								int rgb = snap(points[x][y]);
 								g.setColor(new Color(cr, cg,cb));
 								flag0 = true;
@@ -74,6 +102,14 @@ public class Test extends Applet{
 				}
 			}
 		}
+		g.setColor(new Color(127,127,127,127));
+		for (int gridx = 0; gridx < getWidth(); gridx+=20) {
+			g.drawLine(gridx, 0, gridx, getHeight());
+		}
+		for (int gridy = 0; gridy < getHeight(); gridy+=20) {
+			g.drawLine(0, gridy, getWidth(), gridy);
+		}
+		g.drawImage(shadowOuter, 0, 0, null);
 	}
 	
 }

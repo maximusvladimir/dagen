@@ -1,5 +1,7 @@
 package com.jpii.dagen;
 
+import java.util.Random;
+
 public class IslandEngine extends Engine {
 
 	double[][] waterpoints;
@@ -7,14 +9,20 @@ public class IslandEngine extends Engine {
 	
 	public IslandEngine(int width, int height) {
 		super(width, height);
+		if (rand == null) {
+			rand = new Random();
+		}
+		rr = rand.nextInt(width/3) + width/2;
+	}
+	
+	public void setIslandRadius(double radius) {
+		rr = radius;
 	}
 	
 	public void generate(MapType type, int seed, double magnitude) {
 		super.generate(type, seed, magnitude);
 		
 		waterpoints = new double[width][height];
-		
-		rr = rand.nextInt(width/3) + width/2;
 		
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
@@ -30,7 +38,7 @@ public class IslandEngine extends Engine {
 		}
 		int numLakes = 2;
 		
-		numLakes = (int)((width / rr) * 6);
+		numLakes = (int)((rr / width) * 12);
 		
 		for (int lakes = 0; lakes < numLakes; lakes++) {
 			boolean lakepointfound = false;
