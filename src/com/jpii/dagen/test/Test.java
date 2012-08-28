@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
 import java.awt.MultipleGradientPaint.CycleMethod;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
@@ -14,22 +16,23 @@ import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
 
 @SuppressWarnings("serial")
-public class Test extends Applet{
+public class Test extends Applet implements KeyListener{
 	
 	IslandEngine eng;
 	
 	int WIDTH = 200;
 	int HEIGHT = 200;
+	int PIXEL = 3;
 	
 	BufferedImage shadowOuter;
 	BufferedImage grid;
 	
 	public void init() {
 		eng = new IslandEngine(WIDTH,HEIGHT);
-		setSize(WIDTH * 3, HEIGHT * 3);
+		setSize(WIDTH * PIXEL, HEIGHT * PIXEL);
 		eng.setSmoothFactor(3);
 		eng.setIslandRadius(getWidth() / 8);
-		eng.generate(MapType.Hills, (int)(Math.random() * 4000), 1);
+		eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
 		
 		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics g = shadowOuter.getGraphics();
@@ -53,6 +56,8 @@ public class Test extends Applet{
 			g.drawLine(0, gridy, getWidth(), gridy);
 		}
         
+		addKeyListener(this);
+		
 		repaint();
 	}
 	
@@ -65,7 +70,7 @@ public class Test extends Applet{
 	}
 	
 	public void paint(Graphics g) {
-		if (eng != null) {	
+		if (eng != null) {
 			double[][] points = eng.getPoints();
 			g.setColor(Color.black);
 			g.fillRect(0, 0, getWidth(), getHeight());
@@ -76,7 +81,7 @@ public class Test extends Applet{
 						int reduce = (int)(snap(points[x][y]) * 49.0);
 						g.setColor(new Color(50 - reduce,
 								100 - reduce,150 - reduce));
-						g.fillRect(x * 3, y * 3, 3,3);
+						g.fillRect(x * PIXEL, y * PIXEL, PIXEL,PIXEL);
 					}
 					else {
 						boolean flag0 = false;
@@ -99,7 +104,7 @@ public class Test extends Applet{
 							int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
 							g.setColor(new Color(cr, cg,cb));//new Color(rgb,rgb,rgb));
 						}
-						g.fillRect(x * 3, y * 3, 3,3);
+						g.fillRect(x * PIXEL, y * PIXEL, PIXEL,PIXEL);
 					}
 				}
 			}
@@ -108,10 +113,23 @@ public class Test extends Applet{
 		
 		g.drawImage(shadowOuter, 0, 0, null);
 		
-		g.setFont(new Font("Segoe UI Light", Font.PLAIN, 48));
+		g.setFont(new Font("Segoe UI Light", Font.PLAIN, (int)(getWidth() / (PIXEL * 4.0)) ));
 		g.setColor(new Color(255,255,255,100));
 		g.drawString("Seed:" + eng.getSeed(), 0, 40);
 		g.drawString("Gens:" + eng.getCycles(), 0, 80);
+		g.drawString("Press <space> to regen", 0, 120);
+	}
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+			eng.generate(MapType.Hills, (int)(Math.random() * 100000), 1);
+			repaint();
+		}
+	}
+	public void keyReleased(KeyEvent arg0) {
+	}
+	public void keyTyped(KeyEvent arg0) {
 	}
 	
 }
