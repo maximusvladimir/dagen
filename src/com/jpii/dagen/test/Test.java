@@ -30,7 +30,7 @@ public class Test extends Applet implements KeyListener{
 	
 	public void init() {
 		eng = new IslandEngine(WIDTH,HEIGHT);
-		setSize(WIDTH * 4, HEIGHT * 4);
+		setSize(WIDTH * PIXEL, HEIGHT * PIXEL);
 		eng.setSmoothFactor(3);
 		eng.setIslandRadius(getWidth() / 8);
 		eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
