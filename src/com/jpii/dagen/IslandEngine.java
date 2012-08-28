@@ -63,9 +63,9 @@ public class IslandEngine extends Engine {
 		
 		for (int x = 2; x < width-4; x++) {
 			for (int y = 2; y < height-4; y++) {
-				if (points[x-1][y] == 0 && points[x][y-1] == 0 &&
-						points[x+1][y] == 0 && points[x][y+1] == 0) {
-					points[x][y] = 0;
+				if (points[x-1][y] < 0.7 && points[x][y-1] < 0.7 &&
+						points[x+1][y] < 0.7 && points[x][y+1] < 0.7) {
+					//points[x][y] = rand.nextDouble() * 0.6;
 				}
 			}
 		}		

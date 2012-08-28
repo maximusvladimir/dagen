@@ -2,6 +2,7 @@ package com.jpii.dagen.test;
 
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
@@ -70,10 +71,9 @@ public class Test extends Applet{
 			g.fillRect(0, 0, getWidth(), getHeight());
 			for (int x = 0; x < WIDTH; x++) {
 				for (int y = 0; y < HEIGHT; y++) {
-					double wamount = 0.75;
+					double wamount = 0.70;
 					if (points[x][y] < wamount){
 						int reduce = (int)(snap(points[x][y]) * 49.0);
-						System.out.println("rf" + points[x][y]);
 						g.setColor(new Color(50 - reduce,
 								100 - reduce,150 - reduce));
 						g.fillRect(x * 3, y * 3, 3,3);
@@ -105,7 +105,13 @@ public class Test extends Applet{
 			}
 		}
 		g.drawImage(grid, 0, 0, null);
+		
 		g.drawImage(shadowOuter, 0, 0, null);
+		
+		g.setFont(new Font("Segoe UI Light", Font.PLAIN, 48));
+		g.setColor(new Color(255,255,255,100));
+		g.drawString("Seed:" + eng.getSeed(), 0, 40);
+		g.drawString("Gens:" + eng.getCycles(), 0, 80);
 	}
 	
 }

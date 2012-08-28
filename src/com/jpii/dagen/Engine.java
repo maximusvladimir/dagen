@@ -5,6 +5,8 @@ import java.util.Random;
 public class Engine {
 	int width = 0;
 	int height = 0;
+	int seed_i = 0;
+	int cycles = 0;
 	
 	int mtMag = 0;
 	double magnitude = 1.0;
@@ -40,13 +42,28 @@ public class Engine {
 	}
 	
 	/**
+	 * Gets the current engine seed.
+	 * @return The seed of the generator.
+	 */
+	public int getSeed() {
+		return seed_i;
+	}
+	
+	public int getCycles() {
+		return cycles;
+	}
+	
+	/**
 	 * Generated the map, and places it in the generation matrix.
 	 * @param type The type of map to produce. (No longer used).
 	 * @param seed The seed (random value) of the map.
 	 * @param magnitude The magnitude (roughness) of the map.
 	 */
 	public void generate(MapType type, int seed, double magnitude) {
+		cycles = 0;
 		points = new double[width][height];
+		
+		seed_i = seed;
 		
 		rand = new Random(seed);
 		this.magnitude = magnitude;
@@ -74,6 +91,7 @@ public class Engine {
 	 * @param c4 The middle y random square coordinate.
 	 */
 	private void iterate(double x, double y, double width, double height, double c1, double c2, double c3, double c4) {
+		cycles += 1;
         double e1,e2,e3,e4,e5,e6,e7;
         e6 = Math.floor(width / 2);
         e7 = Math.floor(height / 2);
