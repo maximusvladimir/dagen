@@ -55,11 +55,8 @@ public class Test extends Applet{
 	public void paint(Graphics g) {
 		if (eng != null) {	
 			double[][] points = eng.getPoints();
-<<<<<<< HEAD
 			@SuppressWarnings("unused")
 			double[][] water = eng.getWaterPoints();
-=======
->>>>>>> Demo is ALOT nicer.
 			g.setColor(Color.black);
 			g.fillRect(0, 0, getWidth(), getHeight());
 			for (int x = 0; x < WIDTH; x++) {
@@ -77,12 +74,8 @@ public class Test extends Applet{
 								int reduce = (int)(points[x][y] * 119);
 								int cr = 164 - reduce + eng.r(10, 30);
 								int cg = 149 - reduce + eng.r(10, 30);
-<<<<<<< HEAD
 								int cb = 125 - reduce + eng.r(10, 30);
 								@SuppressWarnings("unused")
-=======
-								int cb = 125 - reduce + eng.r(10, 20);
->>>>>>> Demo is ALOT nicer.
 								int rgb = snap(points[x][y]);
 								g.setColor(new Color(cr, cg,cb));
 								flag0 = true;
