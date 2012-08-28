@@ -30,7 +30,7 @@ public class Test extends Applet implements KeyListener{
 	
 	public void init() {
 		eng = new IslandEngine(WIDTH,HEIGHT);
-		setSize(WIDTH * PIXEL, HEIGHT * PIXEL);
+		setSize(WIDTH * 4, HEIGHT * 4);
 		eng.setSmoothFactor(3);
 		eng.setIslandRadius(getWidth() / 8);
 		eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
@@ -117,7 +117,7 @@ public class Test extends Applet implements KeyListener{
 		EngineStatistics stats = new EngineStatistics(eng);
 		int amountWater = stats.getPercentWater();
 		
-		if (amountWater < 75) {
+		if (amountWater < 70 || amountWater > 90) {
 			eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
 			repaint();
 		}
