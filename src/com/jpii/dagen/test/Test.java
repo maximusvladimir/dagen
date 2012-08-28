@@ -21,12 +21,13 @@ public class Test extends Applet{
 	int HEIGHT = 200;
 	
 	BufferedImage shadowOuter;
+	BufferedImage grid;
 	
 	public void init() {
 		eng = new IslandEngine(WIDTH,HEIGHT);
 		setSize(WIDTH * 3, HEIGHT * 3);
-		//eng.setSmoothFactor(3);
-		eng.setIslandRadius(getWidth() / 10);
+		eng.setSmoothFactor(3);
+		eng.setIslandRadius(getWidth() / 8);
 		eng.generate(MapType.Hills, (int)(Math.random() * 4000), 1);
 		
 		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
@@ -41,60 +42,8 @@ public class Test extends Applet{
         g2.setPaint(p);
         g2.fillRect(0, 0, getWidth(), getHeight());
 		
-		repaint();
-	}
-	
-	public int snap(double d) {
-		if (d > 1.0)
-			d = 1.0;
-		if (d < 0.0)
-			d = 0.0;
-		return (int)(d * 255);
-	}
-	
-	public void paint(Graphics g) {
-		if (eng != null) {	
-			double[][] points = eng.getPoints();
-			@SuppressWarnings("unused")
-			double[][] water = eng.getWaterPoints();
-			g.setColor(Color.black);
-			g.fillRect(0, 0, getWidth(), getHeight());
-			for (int x = 0; x < WIDTH; x++) {
-				for (int y = 0; y < HEIGHT; y++) {
-					if (points[x][y] < 0.3){
-						g.setColor(new Color(50 - eng.r(-10,10), 100 - eng.r(-10, 0),150-  eng.r(-10, 10)));
-						g.fillRect(x * 3, y * 3, 3,3);
-					}
-					else {
-						boolean flag0 = false;
-						if (x > 3 & y > 3 && x < eng.getWidth() - 3 && y < eng.getHeight() - 3) {
-							if (points[x-1][y] < 0.3 || points[x-1][y-1] < 0.3
-									|| points[x][y-1] < 0.3 || points[x+1][y+1] < 0.3
-									|| points[x+1][y] < 0.3 || points[x][y+1] < 0.3) {
-								int reduce = (int)(points[x][y] * 119);
-								int cr = 164 - reduce + eng.r(10, 30);
-								int cg = 149 - reduce + eng.r(10, 30);
-								int cb = 125 - reduce + eng.r(10, 30);
-								@SuppressWarnings("unused")
-								int rgb = snap(points[x][y]);
-								g.setColor(new Color(cr, cg,cb));
-								flag0 = true;
-							}	
-						}
-						if (!flag0) {
-							int reduce = (int)(points[x][y] * 6);
-							int cr = 64 - reduce;//eng.r(-5,5) - reduce;
-							int cg = 128 - reduce + eng.r(-5, 5);//eng.r(-5, 5) - reduce;
-							int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
-							@SuppressWarnings("unused")
-							int rgb = snap(points[x][y]);
-							g.setColor(new Color(cr, cg,cb));//new Color(rgb,rgb,rgb));
-						}
-						g.fillRect(x * 3, y * 3, 3,3);
-					}
-				}
-			}
-		}
+        grid = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		g = grid.getGraphics();
 		g.setColor(new Color(127,127,127,127));
 		for (int gridx = 0; gridx < getWidth(); gridx+=20) {
 			g.drawLine(gridx, 0, gridx, getHeight());
@@ -102,6 +51,60 @@ public class Test extends Applet{
 		for (int gridy = 0; gridy < getHeight(); gridy+=20) {
 			g.drawLine(0, gridy, getWidth(), gridy);
 		}
+        
+		repaint();
+	}
+	
+	public double snap(double d) {
+		if (d > 1.0)
+			d = 1.0;
+		if (d < 0.0)
+			d = 0.0;
+		return (d);
+	}
+	
+	public void paint(Graphics g) {
+		if (eng != null) {	
+			double[][] points = eng.getPoints();
+			g.setColor(Color.black);
+			g.fillRect(0, 0, getWidth(), getHeight());
+			for (int x = 0; x < WIDTH; x++) {
+				for (int y = 0; y < HEIGHT; y++) {
+					double wamount = 0.75;
+					if (points[x][y] < wamount){
+						int reduce = (int)(snap(points[x][y]) * 49.0);
+						System.out.println("rf" + points[x][y]);
+						g.setColor(new Color(50 - reduce,
+								100 - reduce,150 - reduce));
+						g.fillRect(x * 3, y * 3, 3,3);
+					}
+					else {
+						boolean flag0 = false;
+						if (x > 3 & y > 3 && x < eng.getWidth() - 3 && y < eng.getHeight() - 3) {
+							if (points[x-1][y] < wamount || points[x-1][y-1] < wamount
+									|| points[x][y-1] < wamount || points[x+1][y+1] < wamount
+									|| points[x+1][y] < wamount || points[x][y+1] < wamount) {
+								int reduce = 30;//(int)(snap(points[x][y]) * 120);
+								int cr = 164 - reduce + eng.r(-20, 10);
+								int cg = 149 - reduce + eng.r(-20, 10);
+								int cb = 125 - reduce + eng.r(-20, 10);
+								g.setColor(new Color(cr, cg,cb));
+								flag0 = true;
+							}	
+						}
+						if (!flag0) {
+							int reduce = (int)(snap(points[x][y]) * 63);
+							int cr = 64 - reduce;//eng.r(-5,5) - reduce;
+							int cg = 128 - reduce + eng.r(-5, 5);//eng.r(-5, 5) - reduce;
+							int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
+							g.setColor(new Color(cr, cg,cb));//new Color(rgb,rgb,rgb));
+						}
+						g.fillRect(x * 3, y * 3, 3,3);
+					}
+				}
+			}
+		}
+		g.drawImage(grid, 0, 0, null);
 		g.drawImage(shadowOuter, 0, 0, null);
 	}
 	
