@@ -23,7 +23,7 @@ public class Test extends Applet implements KeyListener{
 	
 	int WIDTH = 200;
 	int HEIGHT = 200;
-	int PIXEL = 3;
+	int PIXEL = 4;
 	
 	BufferedImage shadowOuter;
 	BufferedImage grid;
@@ -86,10 +86,13 @@ public class Test extends Applet implements KeyListener{
 					}
 					else {
 						boolean flag0 = false;
-						if (x > 3 & y > 3 && x < eng.getWidth() - 3 && y < eng.getHeight() - 3) {
-							if (points[x-1][y] < wamount || points[x-1][y-1] < wamount
-									|| points[x][y-1] < wamount || points[x+1][y+1] < wamount
-									|| points[x+1][y] < wamount || points[x][y+1] < wamount) {
+						//if (x > 3 & y > 3 && x < eng.getWidth() - 3 && y < eng.getHeight() - 3) {
+							if (eng.getPoint(x-1,y) < wamount 
+									|| eng.getPoint(x-1,y-1) < wamount
+									|| eng.getPoint(x,y-1) < wamount
+									|| eng.getPoint(x+1,y+1) < wamount
+									|| eng.getPoint(x+1,y) < wamount
+									|| eng.getPoint(x,y+1) < wamount) {
 								int reduce = 30;//(int)(snap(points[x][y]) * 120);
 								int cr = 164 - reduce + eng.r(-20, 10);
 								int cg = 149 - reduce + eng.r(-20, 10);
@@ -97,7 +100,7 @@ public class Test extends Applet implements KeyListener{
 								g.setColor(new Color(cr, cg,cb));
 								flag0 = true;
 							}	
-						}
+						//}
 						if (!flag0) {
 							int reduce = (int)(snap(points[x][y]) * 63);
 							int cr = 64 - reduce;//eng.r(-5,5) - reduce;

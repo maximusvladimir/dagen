@@ -170,6 +170,28 @@ public class Engine {
 	}
 	
 	/**
+	 * Gets a point in the matrix. Better than "getPoints()".
+	 * @param x The x location in the matrix.
+	 * @param y The y location in the matrix.
+	 * @return The value at the location in the matrix.
+	 */
+	public double getPoint(int x, int y) {
+		if (points != null) {
+			if (x < 0)
+				x = 0;
+			if (y < 0)
+				y = 0;
+			if (x > width - 1)
+				x = width - 1;
+			if (y > height - 1)
+				y = height - 1;
+			
+			return points[x][y];
+		}
+		return -1;
+	}
+	
+	/**
 	 * Get the smoothing factor.
 	 * @return The amount of smoothing to apply.
 	 */
