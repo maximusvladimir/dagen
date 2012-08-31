@@ -22,6 +22,19 @@ public enum TreeType {
 	 *                 -------
 	 *                   | |
 	 *                   ---
+	 *                   
+	 * Dead Christmas Tree Picture:
+	 *
+	 *					$
+	 *				  % |
+ 	 *				   \| \/
+ 	 *				   %|_/	
+  	 *					|
+  	 *					^
 	 */
-	Pine
+	Pine,
+	/**
+	 * TODO: Implement
+	 */
+	Oak
 }
