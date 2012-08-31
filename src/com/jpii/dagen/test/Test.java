@@ -12,14 +12,17 @@ import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
+import com.jpii.dagen.Engine;
 import com.jpii.dagen.EngineStatistics;
 import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
+import com.jpii.dagen.vegetation.TreeEngine;
 
 @SuppressWarnings("serial")
 public class Test extends Applet implements KeyListener{
 	
-	IslandEngine eng;
+	Engine eng;
+	TreeEngine trees;
 	
 	int WIDTH = 200;
 	int HEIGHT = 200;
@@ -29,11 +32,14 @@ public class Test extends Applet implements KeyListener{
 	BufferedImage grid;
 	
 	public void init() {
-		eng = new IslandEngine(WIDTH,HEIGHT);
+		eng = new Engine(WIDTH,HEIGHT);
 		setSize(WIDTH * PIXEL, HEIGHT * PIXEL);
 		eng.setSmoothFactor(3);
-		eng.setIslandRadius(getWidth() / 8);
+		//eng.setIslandRadius(getWidth() / 8);
 		eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
+		
+		trees = new TreeEngine(eng);
+		trees.generate(eng.getWaterLevel(), 10,20);
 		
 		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics g = shadowOuter.getGraphics();
@@ -113,6 +119,7 @@ public class Test extends Applet implements KeyListener{
 				}
 			}
 		}
+		g.drawImage(trees.getGeneratedImage(getWidth(), getHeight(), PIXEL), 0,0, null);
 		g.drawImage(grid, 0, 0, null);
 		
 		g.drawImage(shadowOuter, 0, 0, null);
@@ -122,6 +129,13 @@ public class Test extends Applet implements KeyListener{
 		
 		if (amountWater < 70 || amountWater > 90) {
 			eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
+			try {
+				trees = new TreeEngine(eng);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			trees.generate(eng.getWaterLevel(), 10,20);
+			
 			repaint();
 		}
 		//int amountLand = 100 - amountWater;

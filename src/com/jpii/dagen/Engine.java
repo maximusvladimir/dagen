@@ -11,6 +11,7 @@ public class Engine {
 	int mtMag = 0;
 	double magnitude = 1.0;
 	int smoothamount = 10;
+	boolean isgenerated = false;
 	
 	double waterLevel = 0.7;
 	
@@ -79,6 +80,11 @@ public class Engine {
 		
 		iterate(0,0,width,height,rand.nextDouble(),rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 		iterate(smoothamount >> 2);
+		isgenerated = true;
+	}
+	
+	public boolean isGenerated() {
+		return isgenerated;
 	}
 
 	/**
