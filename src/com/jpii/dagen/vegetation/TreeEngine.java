@@ -9,6 +9,10 @@ public class TreeEngine {
 	Engine eng;
 	BufferedImage image;
 	Tree[][] flags;
+	/**
+	 * Creates a new instance of the TreeEngine class.
+	 * @param eng The engine to produce trees with.
+	 */
 	public TreeEngine(Engine eng){
 		if (eng == null || !eng.isGenerated()){
 			throw new NullPointerException("Generator has not been initialized.");
@@ -17,6 +21,12 @@ public class TreeEngine {
 		this.eng = eng;
 	}
 	
+	/**
+	 * Generates a series of tree, based on the current engine.
+	 * @param minheight The minimum height that a tree has to be placed at.
+	 * @param min The minimum number of trees.
+	 * @param max The maximum number of trees.
+	 */
 	public void generate(double minheight, int min, int max) {
 		int total = 0;
 		int wanted = eng.r(min, max);
@@ -46,6 +56,13 @@ public class TreeEngine {
 		}
 	}
 	
+	/**
+	 * Gets the generation in image form.
+	 * @param width The width of the image.
+	 * @param height The height of the image.
+	 * @param pixelscale The current pixel scale to use.
+	 * @return Gets the generated image.
+	 */
 	public BufferedImage getGeneratedImage(int width, int height, int pixelscale) {
 		image = new BufferedImage(width*pixelscale, height*pixelscale, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = image.getGraphics();

@@ -68,6 +68,11 @@ public class Test extends Applet implements KeyListener{
 		repaint();
 	}
 	
+	/**
+	 * Adjusts the double to fit it within 0.0 and 1.0.
+	 * @param d The double to adjust.
+	 * @return The adjusted double.
+	 */
 	public double snap(double d) {
 		if (d > 1.0)
 			d = 1.0;
