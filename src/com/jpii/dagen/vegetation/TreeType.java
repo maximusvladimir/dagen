@@ -25,12 +25,12 @@ public enum TreeType {
 	 *                   
 	 * Dead Christmas Tree Picture:
 	 *
-	 *					$
-	 *				  % |
- 	 *				   \| \/
- 	 *				   %|_/	
-  	 *					|
-  	 *					^
+	 *						 $
+	 *					   % |
+ 	 *						\| \/
+ 	 *						%|_/	
+  	 *						 |
+  	 *						 ^
 	 */
 	Pine,
 	/**
