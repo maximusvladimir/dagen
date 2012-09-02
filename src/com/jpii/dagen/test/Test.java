@@ -129,8 +129,7 @@ public class Test extends Applet implements KeyListener{
 		
 		g.drawImage(shadowOuter, 0, 0, null);
 		
-		EngineStatistics stats = new EngineStatistics(eng);
-		int amountWater = stats.getPercentWater();
+		int amountWater = eng.getStats().getPercentWater();
 		
 		if (amountWater < 70 || amountWater > 90) {
 			eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);

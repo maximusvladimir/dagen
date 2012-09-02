@@ -73,25 +73,29 @@ public class TreeEngine {
 		for (int x = 0; x < eng.getWidth(); x++) {
 			for (int y = 0; y < eng.getHeight(); y++) {
 				if (flags[x][y] != null) {
-					x *= pixelscale;
-					y *= pixelscale;
-					int scz = 10;
-					int brkr = 76 + eng.r(-scz, scz);
-					int brkg = 43 + eng.r(-scz, scz);
-					int brkb = 27 + eng.r(-scz, scz);
-					int trrr = 71 + eng.r(-scz, scz);
-					int trrg = 133 + eng.r(-scz, scz);
-					int trrb = 66 + eng.r(-scz, scz);
-					g.setColor(new Color(brkr,brkg,brkb));
-					g.fillRect(x-(1*pixel), y-(3*pixel), 1*pixel, 6*pixel);
-					g.setColor(new Color(trrr,trrg,trrb));
-					g.fillOval(x-(1*pixel), y-(3*pixel), 1*pixel, 3*pixel);
-					x /= pixelscale;
-					y /= pixelscale;
+					drawLivingTree(g,x*pixelscale,y*pixelscale,pixelscale,flags[x][y]);
 				}
 			}
 		}
 		
 		return image;
+	}
+
+	private void drawLivingTree(Graphics g, int x, int y, int scale, Tree tree) {
+		if (tree.getTreeType() == TreeType.Pine) {
+			int scz = 10;
+			int brkr = 76 + eng.r(-scz, scz);
+			int brkg = 43 + eng.r(-scz, scz);
+			int brkb = 27 + eng.r(-scz, scz);
+			int trrr = 71 + eng.r(-scz, scz);
+			int trrg = 133 + eng.r(-scz, scz);
+			int trrb = 66 + eng.r(-scz, scz);
+			g.setColor(new Color(brkr,brkg,brkb));
+			g.fillRect(x-(1*scale), y-(6*scale), 1*scale, 6*scale);
+			g.setColor(new Color(trrr,trrg,trrb));
+			g.fillRect(x-(1*scale), y-(6*scale), 1*scale, 3*scale);
+		}
+		else
+			throw new NullPointerException("Unimplemented tree exception!");
 	}
 }

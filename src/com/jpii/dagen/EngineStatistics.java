@@ -6,12 +6,13 @@ package com.jpii.dagen;
  */
 public class EngineStatistics {
 	Engine eng;
+	int percentwater;
 	/**
 	 * Constructs a new instance of EngineStatistics.
 	 * @param eng
 	 */
-	public EngineStatistics(Engine eng) {
-		this.eng = eng;
+	public EngineStatistics(int ski) {
+		percentwater = ski;
 	}
 	
 	/**
@@ -19,16 +20,7 @@ public class EngineStatistics {
 	 * @return Returns a number out of 100 that pertains to the amount that is water.
 	 */
 	public int getPercentWater() {
-		int water = 0;
-		double[][] points = eng.getPoints();
-		for (int x = 0; x < eng.getWidth(); x++) {
-			for (int y = 0; y < eng.getHeight(); y++) {
-				if (points[x][y] < eng.getWaterLevel()) {
-					water += 1;
-				}
-			}
-		}
-		return (water * 100) / (eng.getWidth() * eng.getHeight());
+		return percentwater;
 	}
 	
 	/**

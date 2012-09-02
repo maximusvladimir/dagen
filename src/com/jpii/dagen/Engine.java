@@ -12,6 +12,7 @@ public class Engine {
 	double magnitude = 1.0;
 	int smoothamount = 10;
 	boolean isgenerated = false;
+	EngineStatistics stats;
 	
 	double waterLevel = 0.7;
 	
@@ -80,6 +81,7 @@ public class Engine {
 		
 		iterate(0,0,width,height,rand.nextDouble(),rand.nextDouble(),rand.nextDouble(),rand.nextDouble());
 		iterate(smoothamount >> 2);
+		reRunStats();
 		isgenerated = true;
 	}
 	
@@ -229,5 +231,20 @@ public class Engine {
 	
 	public double getWaterLevel() {
 		return waterLevel;
+	}
+	
+	public void reRunStats() {
+		int w = 0;
+		for (int x = 0; x< width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (points[x][y] < waterLevel)
+					w += 1;
+			}
+		}
+		stats = new EngineStatistics((w * 100) / (width*height));
+	}
+
+	public EngineStatistics getStats() {
+		return stats;
 	}
 }
