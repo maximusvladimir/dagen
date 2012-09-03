@@ -129,7 +129,10 @@ public class Test extends Applet implements KeyListener{
 		
 		int amountWater = eng.getStats().getPercentWater();
 		
-		if (amountWater < 70){//|| amountWater > 90) {
+		if (amountWater < 70){
+			regen();
+		}
+		else if (amountWater > 90) {
 			regen();
 		}
 		//int amountLand = 100 - amountWater;
