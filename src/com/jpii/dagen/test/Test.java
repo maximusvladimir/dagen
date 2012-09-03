@@ -13,8 +13,6 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 
 import com.jpii.dagen.Engine;
-import com.jpii.dagen.EngineStatistics;
-import com.jpii.dagen.IslandEngine;
 import com.jpii.dagen.MapType;
 import com.jpii.dagen.vegetation.TreeEngine;
 
@@ -131,16 +129,8 @@ public class Test extends Applet implements KeyListener{
 		
 		int amountWater = eng.getStats().getPercentWater();
 		
-		if (amountWater < 70 || amountWater > 90) {
-			eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
-			try {
-				trees = new TreeEngine(eng);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			trees.generate(eng.getWaterLevel(), 10,20);
-			
-			repaint();
+		if (amountWater < 70){//|| amountWater > 90) {
+			regen();
 		}
 		//int amountLand = 100 - amountWater;
 		
@@ -150,13 +140,20 @@ public class Test extends Applet implements KeyListener{
 		g.drawString("Gens:" + eng.getCycles(), 0, 80);
 		g.drawString("Press <space> to regen", 0, 120);
 		g.drawString("Percent water:" + amountWater, 0, 160);
+		g.drawString("Number of trees:" + trees.getNumTrees(), 0,200);
+	}
+	
+	private void regen() {
+		eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
+		trees = new TreeEngine(eng);
+		trees.generate(eng.getWaterLevel(), 10,20);
+		repaint();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
-			eng.generate(MapType.Hills, (int)(Math.random() * 100000), 1);
-			repaint();
+			regen();
 		}
 	}
 	public void keyReleased(KeyEvent arg0) {

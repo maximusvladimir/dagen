@@ -9,6 +9,7 @@ public class TreeEngine {
 	Engine eng;
 	BufferedImage image;
 	Tree[][] flags;
+	int numGen = 0;
 	/**
 	 * Creates a new instance of the TreeEngine class.
 	 * @param eng The engine to produce trees with.
@@ -30,12 +31,14 @@ public class TreeEngine {
 	public void generate(double minheight, int min, int max) {
 		int total = 0;
 		int wanted = eng.r(min, max);
+		numGen = 0;
 		flags = new Tree[eng.getWidth()][eng.getHeight()];
 		while (total < wanted) {
+			int tries = 0;
 			boolean flag = false;
 			int x = eng.r(0, eng.getWidth());
 			int y = eng.r(0, eng.getHeight());
-			while (!flag) {
+			while (!flag && tries < 100) {
 				if (eng.getPoint(x, y) > minheight && eng.getPoint(x-1, y-1) > minheight && eng.getPoint(x, y-1) > minheight
 						&& eng.getPoint(x-1, y) > minheight && eng.getPoint(x, y+1) > minheight
 						&& eng.getPoint(x+1, y) > minheight && eng.getPoint(x+1, y+1) > minheight) {
@@ -46,12 +49,16 @@ public class TreeEngine {
 					x = eng.r(0, eng.getWidth());
 					y = eng.r(0, eng.getHeight());
 				}
+				tries++;
 			}
 			flag = false;
 			if (eng.r(0,5) == 1) {
 				flag = false;
 			}
-			flags[x][y] = new Tree(TreeType.Pine,flag);
+			if (tries < 100) {
+				flags[x][y] = new Tree(TreeType.Pine,flag);
+				numGen++;
+			}
 			total++;
 		}
 	}
@@ -80,7 +87,11 @@ public class TreeEngine {
 		
 		return image;
 	}
-
+	
+	public int getNumTrees() {
+		return numGen;
+	}
+	
 	private void drawLivingTree(Graphics g, int x, int y, int scale, Tree tree) {
 		if (tree.getTreeType() == TreeType.Pine) {
 			int scz = 10;
@@ -91,9 +102,11 @@ public class TreeEngine {
 			int trrg = 133 + eng.r(-scz, scz);
 			int trrb = 66 + eng.r(-scz, scz);
 			g.setColor(new Color(brkr,brkg,brkb));
-			g.fillRect(x-(1*scale), y-(6*scale), 1*scale, 6*scale);
+			g.fillRect(x-(1*scale), y-(3*scale), 1*scale, 2*scale);
 			g.setColor(new Color(trrr,trrg,trrb));
 			g.fillRect(x-(1*scale), y-(6*scale), 1*scale, 3*scale);
+			g.fillRect(x-(2*scale), y-(5*scale), (3*scale), scale);
+			g.fillRect(x-(3*scale), y-(4*scale), (5*scale), scale);
 		}
 		else
 			throw new NullPointerException("Unimplemented tree exception!");
