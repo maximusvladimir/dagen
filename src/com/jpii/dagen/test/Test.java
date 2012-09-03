@@ -11,9 +11,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
+import com.jpii.dagen.ColorHelper;
 import com.jpii.dagen.Engine;
 import com.jpii.dagen.MapType;
+import com.jpii.dagen.processing.FilterEngine;
 import com.jpii.dagen.vegetation.TreeEngine;
 
 @SuppressWarnings("serial")
@@ -39,27 +42,8 @@ public class Test extends Applet implements KeyListener{
 		trees = new TreeEngine(eng);
 		trees.generate(eng.getWaterLevel(), 10,20);
 		
-		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-		Graphics g = shadowOuter.getGraphics();
-		Graphics2D g2 = (Graphics2D)g;
-		Point2D center = new Point2D.Float(getWidth()/2, getHeight()/2);
-        float radius = getWidth();
-        Point2D focus = new Point2D.Float(getWidth()/2, getHeight()/2);
-        float[] dist = {0.0f,0.3f, 1.0f};
-        Color[] colors = {new Color(0,0,0,0),new Color(0,0,0,0), new Color(0,0,0,255)};
-        RadialGradientPaint p = new RadialGradientPaint(center, radius, focus, dist, colors, CycleMethod.NO_CYCLE);
-        g2.setPaint(p);
-        g2.fillRect(0, 0, getWidth(), getHeight());
-		
-        grid = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-		g = grid.getGraphics();
-		g.setColor(new Color(127,127,127,127));
-		for (int gridx = 0; gridx < getWidth(); gridx+=20) {
-			g.drawLine(gridx, 0, gridx, getHeight());
-		}
-		for (int gridy = 0; gridy < getHeight(); gridy+=20) {
-			g.drawLine(0, gridy, getWidth(), gridy);
-		}
+		initInnerShadow();
+		initGrid();
         
 		addKeyListener(this);
 		
@@ -103,19 +87,19 @@ public class Test extends Applet implements KeyListener{
 									|| eng.getPoint(x+1,y) < wamount
 									|| eng.getPoint(x,y+1) < wamount) {
 								int reduce = 30;//(int)(snap(points[x][y]) * 120);
-								int cr = 164 - reduce + eng.r(-20, 10);
-								int cg = 149 - reduce + eng.r(-20, 10);
-								int cb = 125 - reduce + eng.r(-20, 10);
-								g.setColor(new Color(cr, cg,cb));
+								Color sand = ColorHelper.getRelatedRandomColor(new Color(164 - reduce,
+										149 - reduce, 125 - reduce), eng.getRand(), 10);
+								g.setColor(sand);
 								flag0 = true;
 							}	
 						//}
 						if (!flag0) {
 							int reduce = (int)(snap(points[x][y]) * 63);
-							int cr = 64 - reduce;//eng.r(-5,5) - reduce;
-							int cg = 128 - reduce + eng.r(-5, 5);//eng.r(-5, 5) - reduce;
-							int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
-							g.setColor(new Color(cr, cg,cb));//new Color(rgb,rgb,rgb));
+							//int cr = 64 - reduce;//eng.r(-5,5) - reduce;
+							//int cg = 128 - reduce + eng.r(-5, 5);//eng.r(-5, 5) - reduce;
+							//int cb = 80 - reduce + eng.r(-5, 5); //eng.r(-5, 5) - reduce;
+							g.setColor(ColorHelper.getRelatedRandomColor(new Color(64-reduce,128-reduce,80-reduce), eng.getRand(), 5));
+							//g.setColor(new Color(cr, cg,cb));//new Color(rgb,rgb,rgb));
 						}
 						g.fillRect(x * PIXEL, y * PIXEL, PIXEL,PIXEL);
 					}
@@ -135,7 +119,6 @@ public class Test extends Applet implements KeyListener{
 		else if (amountWater > 90) {
 			regen();
 		}
-		//int amountLand = 100 - amountWater;
 		
 		g.setFont(new Font("Segoe UI Light", Font.PLAIN, (int)(getWidth() / (PIXEL * 4.0)) ));
 		g.setColor(new Color(255,255,255,100));
@@ -147,7 +130,8 @@ public class Test extends Applet implements KeyListener{
 	}
 	
 	private void regen() {
-		eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
+		//eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
+		FilterEngine.applyPercent(eng, 70);
 		trees = new TreeEngine(eng);
 		trees.generate(eng.getWaterLevel(), 10,20);
 		repaint();
@@ -156,6 +140,7 @@ public class Test extends Applet implements KeyListener{
 	@Override
 	public void keyPressed(KeyEvent arg0) {
 		if (arg0.getKeyCode() == KeyEvent.VK_SPACE) {
+			eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
 			regen();
 		}
 	}
@@ -163,5 +148,28 @@ public class Test extends Applet implements KeyListener{
 	}
 	public void keyTyped(KeyEvent arg0) {
 	}
-	
+	private void initGrid() {
+		grid = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		Graphics g = grid.getGraphics();
+		g.setColor(new Color(127,127,127,127));
+		for (int gridx = 0; gridx < getWidth(); gridx+=20) {
+			g.drawLine(gridx, 0, gridx, getHeight());
+		}
+		for (int gridy = 0; gridy < getHeight(); gridy+=20) {
+			g.drawLine(0, gridy, getWidth(), gridy);
+		}
+	}
+	private void initInnerShadow() {
+		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		Graphics g = shadowOuter.getGraphics();
+		Graphics2D g2 = (Graphics2D)g;
+		Point2D center = new Point2D.Float(getWidth()/2, getHeight()/2);
+        float radius = getWidth();
+        Point2D focus = new Point2D.Float(getWidth()/2, getHeight()/2);
+        float[] dist = {0.0f,0.3f, 1.0f};
+        Color[] colors = {new Color(0,0,0,0),new Color(0,0,0,0), new Color(0,0,0,255)};
+        RadialGradientPaint p = new RadialGradientPaint(center, radius, focus, dist, colors, CycleMethod.NO_CYCLE);
+        g2.setPaint(p);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+	}
 }

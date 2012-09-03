@@ -57,6 +57,10 @@ public class Engine {
 		return cycles;
 	}
 	
+	public Random getRand() {
+		return rand;
+	}
+	
 	/**
 	 * Generated the map, and places it in the generation matrix.
 	 * @param type The type of map to produce. (No longer used).
@@ -246,5 +250,21 @@ public class Engine {
 
 	public EngineStatistics getStats() {
 		return stats;
+	}
+	
+	public void setPoint(int x, int y,double amount) {
+		amount = snap(amount);
+		if (points != null) {
+			if (x < 0)
+				x = 0;
+			if (y < 0)
+				y = 0;
+			if (x > width - 1)
+				x = width - 1;
+			if (y > height - 1)
+				y = height - 1;
+			
+			points[x][y] = amount;
+		}
 	}
 }
