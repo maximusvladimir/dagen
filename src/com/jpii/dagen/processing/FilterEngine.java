@@ -35,6 +35,24 @@ public class FilterEngine {
 				sucessfull = true;
 		}
 	}
+	public static void applyPercentLower(Engine eng, int percentWater) {
+		
+		boolean sucessfull = true;
+		
+		eng.reRunStats();
+		
+		if (eng.getStats().getPercentWater() <= percentWater)
+			sucessfull = false;
+		
+		while (!sucessfull) {
+			applyRise(eng, 0.1);
+			
+			eng.reRunStats();
+			
+			if (eng.getStats().getPercentWater() > percentWater)
+				sucessfull = true;
+		}
+	}
 	public static void applyRadicalTermination(Engine eng, double heightorabove, int radius) {
 		int r2 = radius * radius;
 		for (int x = 0; x < eng.getWidth(); x++) {
