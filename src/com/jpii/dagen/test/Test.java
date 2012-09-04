@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.Random;
 
 import com.jpii.dagen.ColorHelper;
 import com.jpii.dagen.Engine;

@@ -23,7 +23,7 @@ public enum TreeType {
 	 *                   | |
 	 *                   ---
 	 *                   
-	 * Dead Christmas Tree Picture:
+	 * Dead Christmas Tree Picture (o_0):
 	 *
 	 *						 $
 	 *					   % |
@@ -34,7 +34,19 @@ public enum TreeType {
 	 */
 	Pine,
 	/**
-	 * TODO: Implement
+	 * A nice tree.
+	 * 
+	 * Name: Jap
+	 * Scientific Name: Acer palmatum
+	 * For better pictures/info see: http://en.wikipedia.org/wiki/Acer palmatum
+	 * 
+	 * Picture:
+	 * 
+	 * 				^	   ^^
+	 * 			   / \____/  \
+	 * 			   \__   ___  \
+	 *                | |   ---
+	 *                ---
 	 */
-	Oak
+	JMaple
 }
