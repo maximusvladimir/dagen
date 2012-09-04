@@ -35,4 +35,18 @@ public class FilterEngine {
 				sucessfull = true;
 		}
 	}
+	public static void applyRadicalTermination(Engine eng, double heightorabove, int radius) {
+		int r2 = radius * radius;
+		for (int x = 0; x < eng.getWidth(); x++) {
+			for (int y = 0; y < eng.getHeight(); y++) {
+		        for (int x2 = -radius; x2 <= radius; x2++) {
+		            int y2 = (int) (Math.sqrt(r2 - x2*x2) + 0.5);
+		            
+		            if (heightorabove < eng.getPoint(x + x2, y + y2) && heightorabove < eng.getPoint(x+x2, y - y2))
+		            	eng.setPoint(x + x2, y + y2, 0.4);
+		            	eng.setPoint(x + x2, y - y2, 0.4);
+		        }
+			}
+		}
+	}
 }
