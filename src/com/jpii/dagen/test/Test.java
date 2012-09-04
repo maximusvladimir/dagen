@@ -116,9 +116,6 @@ public class Test extends Applet implements KeyListener{
 		if (amountWater < 70){
 			regen();
 		}
-		else if (amountWater > 90) {
-			regen();
-		}
 		
 		g.setFont(new Font("Segoe UI Light", Font.PLAIN, (int)(getWidth() / (PIXEL * 4.0)) ));
 		g.setColor(new Color(255,255,255,100));
