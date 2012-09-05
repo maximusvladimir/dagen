@@ -19,6 +19,11 @@ import com.jpii.dagen.processing.FilterEngine;
 import com.jpii.dagen.vegetation.TreeEngine;
 
 @SuppressWarnings("serial")
+/**
+ * The main demo for dagen.
+ * @author MKirkby
+ *
+ */
 public class Test extends Applet implements KeyListener{
 	
 	Engine eng;

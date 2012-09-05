@@ -2,6 +2,11 @@ package com.jpii.dagen;
 
 import java.util.Random;
 
+/**
+ * Primary generating Engine for dagen.
+ * @author MKirkby
+ *
+ */
 public class Engine {
 	int width = 0;
 	int height = 0;
@@ -53,10 +58,18 @@ public class Engine {
 		return seed_i;
 	}
 	
+	/**
+	 * Gets the number of iteration cycles complete.
+	 * @return The int of cycles.
+	 */
 	public int getCycles() {
 		return cycles;
 	}
 	
+	/**
+	 * Returns the random engine.
+	 * @return The random object.
+	 */
 	public Random getRand() {
 		return rand;
 	}
@@ -89,6 +102,10 @@ public class Engine {
 		isgenerated = true;
 	}
 	
+	/**
+	 * Returns whether data has been generated yet or not.
+	 * @return
+	 */
 	public boolean isGenerated() {
 		return isgenerated;
 	}
@@ -229,14 +246,25 @@ public class Engine {
 		smoothamount = amount;
 	}
 	
+	/**
+	 * Sets the water height.
+	 * @param amount A value between (0.0-1.0), indicating where water should be.
+	 */
 	public void setWaterLevel(double amount) {
 		waterLevel = amount;
 	}
 	
+	/**
+	 * Returns the water height.
+	 * @return
+	 */
 	public double getWaterLevel() {
 		return waterLevel;
 	}
 	
+	/**
+	 * Reruns the engine statistics.
+	 */
 	public void reRunStats() {
 		int w = 0;
 		for (int x = 0; x< width; x++) {
@@ -248,10 +276,21 @@ public class Engine {
 		stats = new EngineStatistics((w * 100) / (width*height));
 	}
 
+	/**
+	 * Returns the statistics of the engine.
+	 * @return The statistics object.
+	 */
 	public EngineStatistics getStats() {
 		return stats;
 	}
 	
+	/**
+	 * Sets a value at the specified coordinates.
+	 * @see The x and y values are snapped.
+	 * @param x The x-location
+	 * @param y The y-location
+	 * @param amount The value to set.
+	 */
 	public void setPoint(int x, int y,double amount) {
 		amount = snap(amount);
 		if (points != null) {

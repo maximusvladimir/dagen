@@ -21,6 +21,7 @@ import com.jpii.dagen.Engine;
 import com.jpii.dagen.MapType;
 
 /**
+ * An animated wave demo class.
  * @author MKirkby
  *
  */

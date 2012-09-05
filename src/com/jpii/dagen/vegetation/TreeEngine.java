@@ -5,6 +5,11 @@ import java.awt.*;
 
 import com.jpii.dagen.Engine;
 
+/**
+ * The tree generating engine.
+ * @author MKirkby
+ *
+ */
 public class TreeEngine {
 	Engine eng;
 	BufferedImage image;
@@ -88,6 +93,10 @@ public class TreeEngine {
 		return image;
 	}
 	
+	/**
+	 * Gets the number of trees that were generated on the last cycle.
+	 * @return
+	 */
 	public int getNumTrees() {
 		return numGen;
 	}
