@@ -5,7 +5,6 @@ package com.jpii.dagen.test;
 
 import java.applet.Applet;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RadialGradientPaint;
@@ -25,6 +24,7 @@ import com.jpii.dagen.MapType;
  * @author MKirkby
  *
  */
+@SuppressWarnings("serial")
 public class AnimationTest extends Applet {
 	Engine primary;
 	BufferedImage grid,shadowOuter,waveOverlay,mapImage;
@@ -43,6 +43,7 @@ public class AnimationTest extends Applet {
 		primary = new Engine(WIDTH,HEIGHT);
 		setSize(WIDTH*PIXEL,HEIGHT*PIXEL);
 		primary.setSmoothFactor(3);
+		primary.setWaterLevel(0.7);
 		primary.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
 		
 		initGrid();
@@ -92,7 +93,7 @@ public class AnimationTest extends Applet {
 			for (int y = 0; y < HEIGHT; y++) {
 				if (waveLocations[x][y]) {
 					double cdfloat = Math.sin(x + pulseLine[x]);
-					g.setColor(new Color(mapImage.getRGB(x*PIXEL, y*PIXEL)).darker());
+					g.setColor(new Color(mapImage.getRGB(x*PIXEL, y*PIXEL)).brighter());
 					g.fillRect(x*PIXEL, (int)((y *PIXEL) + cdfloat), PIXEL,PIXEL);
 				}
 			}
@@ -108,7 +109,7 @@ public class AnimationTest extends Applet {
 				g.drawImage(waveOverlay,0,0,null);
 			}
 			//g.drawImage(grid,0,0,null);
-			//g.drawImage(shadowOuter,0,0,null);
+			g.drawImage(shadowOuter,0,0,null);
 		}
 	}
 	private void initGrid() {
@@ -125,6 +126,15 @@ public class AnimationTest extends Applet {
 	private void initInnerShadow() {
 		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
 		Graphics g = shadowOuter.getGraphics();
+		
+		g.setColor(new Color(127,127,127,127));
+		for (int gridx = 0; gridx < getWidth(); gridx+=20) {
+			g.drawLine(gridx, 0, gridx, getHeight());
+		}
+		for (int gridy = 0; gridy < getHeight(); gridy+=20) {
+			g.drawLine(0, gridy, getWidth(), gridy);
+		}
+		
 		Graphics2D g2 = (Graphics2D)g;
 		Point2D center = new Point2D.Float(getWidth()/2, getHeight()/2);
         float radius = getWidth();
@@ -174,6 +184,7 @@ public class AnimationTest extends Applet {
 		}
 	}
 	private void initWaves() {
+		waveOverlay = new BufferedImage(WIDTH*PIXEL,HEIGHT*PIXEL,BufferedImage.TYPE_INT_ARGB);
 		waveLocations = new boolean[WIDTH][HEIGHT];
 		pulseLine = new double[HEIGHT];
 		for (int y = 0; y < HEIGHT; y+=primary.r(2,3)) {
