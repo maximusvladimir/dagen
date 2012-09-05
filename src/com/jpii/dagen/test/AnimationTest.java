@@ -28,7 +28,7 @@ import com.jpii.dagen.MapType;
 @SuppressWarnings("serial")
 public class AnimationTest extends Applet {
 	Engine primary;
-	BufferedImage grid,shadowOuter,waveOverlay,mapImage;
+	BufferedImage grid,shadowOuter,waveOverlay,mapImage,buffer;
 	boolean[][] waveLocations;
 	double[] pulseLine;
 	
@@ -37,9 +37,11 @@ public class AnimationTest extends Applet {
 	Timer ticker;
 	
 	public void init() {	
-		WIDTH = 100;
-		HEIGHT = 100;
+		WIDTH = 150;
+		HEIGHT = 150;
 		PIXEL = 3;
+		
+		buffer = new BufferedImage(WIDTH*PIXEL,HEIGHT*PIXEL,BufferedImage.TYPE_INT_ARGB);
 		
 		primary = new Engine(WIDTH,HEIGHT);
 		setSize(WIDTH*PIXEL,HEIGHT*PIXEL);
@@ -58,7 +60,7 @@ public class AnimationTest extends Applet {
 				animateWaves();
 			}	
 		};
-		ticker = new Timer(500,listener);
+		ticker = new Timer(600,listener);
 		ticker.start();
 		animateWaves();
 	}
@@ -105,12 +107,19 @@ public class AnimationTest extends Applet {
 	
 	public void paint(Graphics g) {
 		if (mapImage != null) {
-			g.drawImage(mapImage, 0, 0, null);
+			buffer.flush();
+			
+			Graphics g2 = buffer.getGraphics();
+			g2.drawImage(mapImage, 0, 0, null);
 			if (waveOverlay != null) {
-				g.drawImage(waveOverlay,0,0,null);
+				g2.drawImage(waveOverlay,0,0,null);
 			}
 			//g.drawImage(grid,0,0,null);
-			g.drawImage(shadowOuter,0,0,null);
+			g2.drawImage(shadowOuter,0,0,null);
+		}
+		
+		if (buffer != null) {
+			g.drawImage(buffer, 0, 0, null);
 		}
 	}
 	private void initGrid() {
