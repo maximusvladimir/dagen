@@ -51,13 +51,6 @@ public class SoundTest extends Applet{
 		}
 		
 		SoundMan.playSound(lists,30.0);
-		
-		if (SoundMan.exportSoundFile(lists, 5.0, SoundFileFormat.WAV, "winSound.wav")) {
-			System.out.println("sound file exported sucessfully!");
-		}
-		else {
-			System.out.println("sound could not export");
-		}
 	}
 	public void playGameOver() {
 		StepList lists = new StepList();
