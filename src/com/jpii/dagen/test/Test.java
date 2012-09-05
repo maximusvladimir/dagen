@@ -113,9 +113,11 @@ public class Test extends Applet implements KeyListener{
 		int amountWater = eng.getStats().getPercentWater();
 		
 		if (amountWater < 70){
+			FilterEngine.applyPercent(eng, 70);
 			regen();
 		}
 		if (amountWater > 90) {
+			FilterEngine.applyPercentUpper(eng, 90);
 			regen();
 		}
 		
@@ -130,8 +132,6 @@ public class Test extends Applet implements KeyListener{
 	
 	private void regen() {
 		//eng.generate(MapType.Hills, (int)(Math.random() * 4000000), 1);
-		FilterEngine.applyPercent(eng, 70);
-		FilterEngine.applyPercentLower(eng, 90);
 		trees = new TreeEngine(eng);
 		trees.generate(eng.getWaterLevel(), 10,20);
 		repaint();

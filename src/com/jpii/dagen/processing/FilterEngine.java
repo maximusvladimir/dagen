@@ -35,13 +35,13 @@ public class FilterEngine {
 				sucessfull = true;
 		}
 	}
-	public static void applyPercentLower(Engine eng, int percentWater) {
+	public static void applyPercentUpper(Engine eng, int percentWater) {
 		
 		boolean sucessfull = true;
 		
 		eng.reRunStats();
 		
-		if (eng.getStats().getPercentWater() <= percentWater)
+		if (eng.getStats().getPercentWater() >= percentWater)
 			sucessfull = false;
 		
 		while (!sucessfull) {
@@ -49,7 +49,7 @@ public class FilterEngine {
 			
 			eng.reRunStats();
 			
-			if (eng.getStats().getPercentWater() > percentWater)
+			if (eng.getStats().getPercentWater() < percentWater)
 				sucessfull = true;
 		}
 	}
