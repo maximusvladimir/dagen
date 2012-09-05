@@ -16,7 +16,7 @@ public class SoundTest extends Applet{
 		g.drawString("Playing title menu sound.", 0, 50);
 		
 		playTitleMenu();
-		sleep(2000);
+		sleep(8000);
 		
 		g.setColor(Color.white);
 		g.fillRect(0,0,getWidth(),getHeight());
