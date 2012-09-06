@@ -1,3 +1,6 @@
+/**
+ * The vegetation part of the engine.
+ */
 package com.jpii.dagen.vegetation;
 
 import java.awt.image.*;

@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.jpii.dagen.test;
 
 import java.applet.Applet;

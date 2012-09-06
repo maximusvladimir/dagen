@@ -1,3 +1,6 @@
+/**
+ * The package containing testing materials.
+ */
 package com.jpii.dagen.test;
 
 import java.applet.Applet;

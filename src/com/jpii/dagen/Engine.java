@@ -1,3 +1,6 @@
+/**
+ * The primary package resposible for dagen.
+ */
 package com.jpii.dagen;
 
 import java.util.Random;
