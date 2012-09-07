@@ -49,13 +49,23 @@ public class CCS extends Applet implements MouseMotionListener {
 		for (int x = 0; x < grid.length; x++) {
 			grid[x][grid.length - 1] = true;
 		}
-		astar = new Pathfinder(grid, new SimplePoint(1,1));
+		astar = new Pathfinder(grid, new SimplePoint((getWidth()/2) / pixel,(getHeight()/2) / pixel));
+		
+		System.out.println("clocx=" + astar.getCurrent().getX() + "clocy=" + astar.getCurrent().getY());
 		
 		destination = new SimplePoint(grid.length - 2,grid.length - 2);
 		
 		for (int c = astar.getCurrent().getX(); c < destination.getX(); c++) {
 			SimplePoint p1 = astar.f(c, astar.findSlope(destination));
-			targetLogic[p1.getX()][p1.getY()] = true;
+			int pointerx = p1.getX();
+			int pointery = p1.getY();
+			if (pointerx < 0)
+				pointerx = 0;
+			if (pointerx >= getWidth() / (pixel+1))
+				pointerx = (getWidth() / (pixel+1)) - 1;
+			if (pointery >= getHeight() / (pixel+1))
+				pointery = (getHeight() / (pixel+1)) - 1;
+			targetLogic[pointerx][pointery] = true;
 		}
 	}
 	
@@ -123,7 +133,17 @@ public class CCS extends Applet implements MouseMotionListener {
 		
 		for (int c = astar.getCurrent().getX(); c < destination.getX(); c++) {
 			SimplePoint p1 = astar.f(c, astar.findSlope(destination));
-			targetLogic[p1.getX()][p1.getY()] = true;
+			int pointerx = p1.getX();
+			int pointery = p1.getY();
+			if (pointerx < 0)
+				pointerx = 0;
+			if (pointery < 0)
+				pointery = 0;
+			if (pointerx >= getWidth() / (pixel+1))
+				pointerx = (getWidth() / (pixel+1)) - 1;
+			if (pointery >= getHeight() / (pixel+1))
+				pointery = (getHeight() / (pixel+1)) - 1;
+			targetLogic[pointerx][pointery] = true;
 		}
 		
 		repaint();
