@@ -29,8 +29,6 @@ import com.jpii.dagen.vegetation.TreeEngine;
  */
 public class Test extends Applet implements KeyListener{
 	
-	//TEST MESSAGE FOR COMMIT.
-	
 	Engine eng;
 	TreeEngine trees;
 	
