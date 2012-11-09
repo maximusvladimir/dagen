@@ -1,7 +1,9 @@
 package com.jpii.dagen.test;
 
 import java.awt.*;
+import java.awt.MultipleGradientPaint.CycleMethod;
 import java.awt.event.*;
+import java.awt.geom.Point2D;
 import java.awt.image.*;
 import java.util.*;
 
@@ -28,6 +30,20 @@ public class FreedomCastle extends JFrame
     {
         new FreedomCastle().setVisible(true);
     }
+	public BufferedImage shadowOuter;
+	private void initInnerShadow() {
+		shadowOuter = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+		Graphics g = shadowOuter.getGraphics();
+		Graphics2D g2 = (Graphics2D)g;
+		Point2D center = new Point2D.Float(getWidth()/2, getHeight()/2);
+        float radius = getWidth();
+        Point2D focus = new Point2D.Float(getWidth()/2, getHeight()/2);
+        float[] dist = {0.0f,0.3f, 1.0f};
+        Color[] colors = {new Color(0,0,0,0),new Color(0,0,0,0), new Color(0,0,0,255)};
+        RadialGradientPaint p = new RadialGradientPaint(center, radius, focus, dist, colors, CycleMethod.NO_CYCLE);
+        g2.setPaint(p);
+        g2.fillRect(0, 0, getWidth(), getHeight());
+	}
 
     Engine eng;
     ArrayList < SimpleBrownian > rivers;
@@ -58,6 +74,9 @@ public class FreedomCastle extends JFrame
                 init();
             }
         });
+        setResizable(false);
+        setSize(800, 600);
+        initInnerShadow();
         init();
     }
     public void init()
@@ -70,8 +89,6 @@ public class FreedomCastle extends JFrame
         }
         trees = new ArrayList < TreeData > ();
         grassRand = new Color[801][601];
-        this.setResizable(false);
-        setSize(800, 600);
         eng = new Engine(800, 600);
         eng.generate(MapType.Hills, SEEDER, 0.6);
         System.out.println("Seed: " + SEEDER);
@@ -281,6 +298,7 @@ public class FreedomCastle extends JFrame
     	g.drawImage(terrain, 0, 0, null);
         g.drawImage(treeBuffer, 0, 0, null);
         g.drawImage(nickiMinaj, 0, 0, null);
+        g.drawImage(shadowOuter, 0,0,null);
         g.drawImage(map, 8, 30, null);
         g.setColor(Color.red);
         g.fillRect(mx - 1, my - 1, 2, 2);
